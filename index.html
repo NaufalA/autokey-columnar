@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://unpkg.com/chota@latest">
+    <script src="cipher.js"></script>
+    <script src="FrontPage.js"></script>
+
+    <title>Autokey Cipher + Columnar Transposition</title>
+</head>
+<body>
+	<div class="container">
+		<h1 class="row is-center text-center">Autokey & Columnar Solver</h1>
+		<div class="card row">
+			<div class="col-4">
+				<h3>Plaintext</h3>
+				<textarea name="plaintext" id="plaintext" cols="30" rows="10"></textarea>
+			</div>
+				<div class="col-4">
+				<h3 class="row is-center">Modifier</h3>
+				<div class="card row">
+					<div class="row">
+						<input type="checkbox" id="autokey-toggle" name="autokey-toggle" value="autokey" checked>
+						<label for="autokey-toggle">Autokey</label><br>
+					</div>
+					<div class="row">
+						<label for="keyword">Keyword</label><br>
+						<input type="text" name="atk-keyword" id="atk-keyword">
+					</div>
+				</div>
+				<br>
+				<div class="card row">
+					<div class="row">
+						<input type="checkbox" id="columnar-toggle" name="columnar-toggle" value="columnar" checked>
+						<label for="columnar-toggle">Columnar</label><br>
+					</div>
+					<div class="row">
+						<label for="kolom">Keyword</label><br>
+						<input type="text" name="cnr-keyword" id="cnr-keyword">
+					</div>
+				</div>
+				<br>
+				<div class="row">
+					<button class="col" onclick="Encipher()">Encipher</button>
+					<button class="col" onclick="Decipher()">Decipher</button>
+					<!-- <button class="col" onclick="EncipherOnClick()">Encipher</button> -->
+					<!-- <button class="col" onclick="DecipherWithKeyWord()">Decipher</button> -->
+				</div>
+			</div>
+			<div class="col-4">
+				<h3>Ciphertext</h3>
+				<textarea name="ciphertext" id="ciphertext" cols="30" rows="10"></textarea>
+			</div>
+		</div>
+
+	</div>
+</body>
+</html>
