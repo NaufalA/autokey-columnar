@@ -1,3 +1,6 @@
+
+var ptLength = 0;	// public variable to cut excess character on columnar decipher
+
 // Autokey functions
 function AutokeyEncipher(keyword, plaintext){
 	var ciphertext = "";
@@ -22,11 +25,10 @@ function AutokeyDecipher(keyword, ciphertext){
 		pCode = (pCode < 0) ? (((pCode % 26) + 26) % 26) : pCode % 26;
 		plaintext += String.fromCharCode(pCode + 65);
 		currentKey += String.fromCharCode(pCode + 65);
-    	console.log(currentKey);
 	}
-    console.log(plaintext);
 	return plaintext;
 }
+
 // Columnar Functions
 
 function ColumnarCreateMatrix(keyword, message, mode) {
@@ -35,7 +37,6 @@ function ColumnarCreateMatrix(keyword, message, mode) {
 		matrix[i] = [];
 		matrix[i].push(i);
 		matrix[i].push(keyword[i]);
-		console.log(matrix[i]);
 	}
 	
 	var messageIndex = 0;
@@ -53,12 +54,10 @@ function ColumnarCreateMatrix(keyword, message, mode) {
 					matrix[x].push("X");			
 				}
 				messageIndex++;
-				console.log(matrix[x]);
 			}
 		}
 	}
 	else {
-		console.log("decipher");
 		ColumnarSort(matrix, "encipher")
 		var index = 0;
 		while(messageIndex < message.length) {
@@ -71,12 +70,9 @@ function ColumnarCreateMatrix(keyword, message, mode) {
 				}
 				messageIndex++;
 			}
-			console.log(matrix[index]);
 			index++;
 		}
 	}
-
-	console.log(matrix);
 
 	return matrix;
 }
@@ -126,7 +122,6 @@ function ColumnarSort(matrix, mode) {
 		}
 	}
 	
-	console.log(matrix);
 	return matrix;
 }
 
@@ -148,6 +143,12 @@ function GetText(matrix, mode) {
 				text += matrix[i][j];
 			}	
 		}
+		console.log(text);
+		if(ptLength > 0)
+		{
+			text = text.slice(0, ptLength);
+		}
+		console.log(text);
 	}
 	return text;
 }
@@ -156,7 +157,10 @@ function GetText(matrix, mode) {
 function Encipher(){
     var plaintext = document.getElementById("plaintext").value.toUpperCase();
     var autokeyToggle = document.getElementById("autokey-toggle").checked;
-    var columnarToggle = document.getElementById("columnar-toggle").checked;
+	var columnarToggle = document.getElementById("columnar-toggle").checked;
+	
+	ptLength = plaintext.length;
+	console.log(ptLength);
 
     if (plaintext.length > 0)
     {
@@ -185,7 +189,6 @@ function Encipher(){
 				matrix = ColumnarSort(matrix, "encipher");
 				
 				var message = GetText(matrix, "encipher");
-				console.log(message);
 				document.getElementById("ciphertext").value = message;
 			}
 			else {
@@ -201,7 +204,6 @@ function Decipher(){
     var autokeyToggle = document.getElementById("autokey-toggle").checked;
     var columnarToggle = document.getElementById("columnar-toggle").checked;
 
-    console.log(ciphertext + " " + autokeyToggle + " " + columnarToggle);
 
     if (ciphertext.length > 0)
     {
@@ -215,21 +217,21 @@ function Decipher(){
 				matrix = ColumnarSort(matrix, "decipher");
 				
 				var message = GetText(matrix, "decipher");
-				console.log(message);
 				document.getElementById("plaintext").value = message;
 			}
 			else {
 				document.getElementById("message").innerHTML = 
 					'Error - Expected Input for Columnar Keyword!';
 			}
+			ciphertext = message;
 		}
+
 
         if (autokeyToggle) {
             // execute autokey
 			var key = document.getElementById("atk-keyword").value.toUpperCase();
 
 			if(key.length > 0) {
-            	console.log(keyword);
 				var plaintext = AutokeyDecipher(key, ciphertext);
     			document.getElementById("plaintext").value = plaintext;
 			}
